@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/banner.css' %}">
+{% endblock styles %}
+{% block title %}
+Chi tiết sản phẩm
+{% endblock %}
+{% block content %}
+<style>
+    .comment-class {
+        /* Tùy chỉnh các thuộc tính CSS cho trường comment */
+        width: 300px;
+        height: 1000px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        /* Thêm các thuộc tính CSS khác theo nhu cầu */
+    }
+</style>
+<div class="banner0   container-lg ">
+    <div class="bannerinfos  container-xxl d-flex">
+        <i class="fa-solid fa-house fa-xxl"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+        <h5> Chi tiết sản phẩm </h5>
+    </div>
+</div>
+<div class="container-lg d-flex justify-content-center p-4 gap-4">
+    <div class="card-image w-50 shadow p-3 ">
+        <img src="{{product.image.url}}" alt="Card Image">
+    </div>
+    <div class="card h-50 ">
+        <div class="card-content ">
+            <h3 class="card-title">{{product.name}}</h3>
+            <hr>
+            <p class=" p-0  m-0 card-description"> Giá :&nbsp;{{product.price}}&nbsp;vnd</p>
+            <hr>
+            <p class=" p-0  m-0 card-description"> Loại sản phẩm :&nbsp;{{product.category}}</p>
+            <hr>
+            <p class=" pb-5  m-0 card-description "> Mô tả :&nbsp;{{product.description}}</p>
+
+            <button class=" btn btn-primary w-100 d-flex justify-content-center position-relative  top-50 m-0 ">
+                <a class="text-light text-decoration-none " href="{% url 'add_to_cart' product.id %}">Mua ngay</a>
+            </button>
+        </div>
+    </div>
+</div>
+<hr>
+<!-- Hiển thị form đánh giá -->
+<div class="container-lg d-flex justify-content-center flex-column align-items-center gap-2  ">
+    {% if user.is_authenticated %}
+    <form class="d-flex justify-content-around  align-items-start gap-2 " method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div>
+            <label for="{{ form.rating.id_for_label }}">Đánh giá : {{ form.rating }}</label>
+            
+        </div>
+
+        <div class="h-25 ">
+            <!-- <label for="{{ form.comment.id_for_label }}"></label> -->
+            {{ form.comment }}
+
+        </div>
+
+        <!-- <div>
+            <label for="{{ form.image.id_for_label }}">Image:</label>
+            {{ form.image }}
+            {% if form.image.errors %}
+            <ul class="errorlist">
+                {% for error in form.image.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div> -->
+
+        <button class="btn btn-primary w-75 h-50 " type="submit">Gửi đánh giá</button>
+    </form>
+    {% endif %}
+<style>
+    .comment-container {
+        margin-top: 20px;
+        width: 500px;
+    }
+
+    .comment {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .comment strong {
+        font-size: 16px;
+    }
+
+    .comment span {
+        color: #888;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+    .comment p {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .comment img {
+        max-width: 200px;
+        margin-top: 10px;
+    }
+
+    .comment hr {
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="comment-container">
+    <hr>
+    {% for review in reviews reversed %}
+    <div class="comment">
+        <i class="fa-solid fa-circle-user fa-xl" style="color: #000000;font-size: 1.2rem;"></i> <strong>{{ review.user.username }}</strong>
+        <span>Đánh giá: {{ review.rating }} <i class="fa-solid fa-star" style="color: #FFD43B;"></i></span>
+        <p>{{ review.comment }}</p>
+        {% if review.image %}
+        <img src="{{ review.image.url }}" alt="Review Image">
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+    {% endfor %}
+</div>
+
+</div>
+
+{% endblock %}

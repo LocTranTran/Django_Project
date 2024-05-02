@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% extends "base.html"%}
+{% load static %}
+
+{% block styles%}
+<link rel="stylesheet" href="{% static 'css/banner.css' %}">
+<link rel="stylesheet" href="{% static 'css/carts.css' %}">
+{% endblock styles%}
+{% block content%}
+<div class=" banner0 container-lg  ">
+    <div class="bannerinfos container-xxl d-flex">
+        <i class="fa-solid fa-house fa-xxl"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+        <h5>Giỏ hàng</h5>
+    </div>
+</div>
+<div class="container-lg d-flex justify-content-center accordion ">
+    <div class="shopping-cart border">
+        <div class="shopping-cart-title d-flex justify-content-evenly b-l border">
+            <b style="margin-left: 50px;">Sản phẩm</b>
+            <b class="ms-5">Giá</b>
+            <b style="margin-left: 50px;">Số lượng</b>
+            <b></b>
+        </div>
+        <div class="d-flex flex-column align-items-center justify-center"
+            style="position: relative; top: 50%; left: 50%; transform: translate(-50%,-50%);">
+        </div>
+        {% for item in items %}
+        <div class="shopping-cart-items">
+            <div class="shopping-cart-items-item">
+                <div class="d-flex align-items-center gap-5" style="width: 240px;">
+                    <img class="shopping-cart-items-img" alt=" " src="{{item.product.image.url}}">
+                    <div>
+                        <h3 style="width: 160px; font-size: 1rem;">{{ item.product.name }}</h3>
+                    </div>
+                </div>
+                <h2 style="width: 100px; font-size: 1.2rem;">{{ item.product.price }}</h2>
+                <div class="quantity mb-3 d-flex justify-content-between align-items-center shadow me-4">
+                    <form method="POST" action="{% url 'cart_detail' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ item.id }}">
+                        <button class="rounded-circle shadow border-0 " type="submit" name="action" value="minus"><i
+                                class="fa-solid fa-minus"></i></button>
+                    </form>
+                    <p class="border rounded-1  d-1 p-1 m-0 w-50 text-center ">{{ item.quantity }}</p>
+                    <form method="POST" action="{% url 'cart_detail' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ item.id }}">
+                        <button class="rounded-circle shadow border-0 " type="submit" name="action" value="plus"><i
+                                class="fa-solid fa-plus"></i></button>
+                    </form>
+                </div>
+                <form method="POST" action="{% url 'cart_detail' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ item.id }}">
+                    <button class="mb-3 border-0 bg-none cart-remove" type="submit" name="action" value="delete"><i
+                            class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="shopping-total d-flex border">
+        <div class="d-flex justify-content-between">
+            <span style="font-size:1.2rem ;">Số sản phẩm : &nbsp;{{total_quality}}</span>
+            <span></span>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+            <span style="font-size:1.2rem ;"> Giảm giá : &nbsp;{{discount}}% </span>
+            <span></span>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+            <b style="font-size:1.2rem ; text-shadow: 2px 2px 0px rgba(246, 255, 0, 0.402);"
+                class="text-warning  ">Thành tiền: {{ total_price }} vnd</b>
+            <span></span>
+        </div>
+        <hr />
+        {% if user.is_authenticated %}
+        <button type="submit" class="order-button"> <a class="text-light text-decoration-none"
+                href="{% url 'check_item' %}">Đặt
+                hàng</a></button>
+        {% if messages %}
+        <div id="notification" class="notification rounded-2  text-danger border shadow top-50 w-25 "
+            style="left: 30%;">
+            {% for message in messages %}
+            <b>{{ message }}</b>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% else %}
+        Vui lòng đăng nhập
+        {% endif %}
+    </div>
+</div>
+<script>
+    // Lấy phần tử thông báo
+    var notification = document.getElementById('notification');
+
+    // Hiển thị thông báo
+    notification.style.display = 'block';
+
+    // Ẩn thông báo sau 1 giây
+    setTimeout(function () {
+        notification.style.display = 'none';
+    }, 1000);
+</script>
+
+{% endblock %}

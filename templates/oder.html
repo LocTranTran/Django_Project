@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% extends "base.html"%}
+{% load static %}
+
+{% block styles%}
+<link rel="stylesheet" href="{% static 'css/banner.css' %}">
+<link rel="stylesheet" href="{% static 'css/carts.css' %}">
+{% endblock styles%}
+{% block content%}
+<div class="banner0   container-xl mt-4 ">
+    <div class="bannerinfos  container-xxl d-flex">
+        <i class="fa-solid fa-house fa-xxl"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+        <h5>Đặt hàng</h5>
+    </div>
+</div>
+
+<style>
+    .info-title {
+        font-weight: bold;
+        padding: none;
+        margin: 0;
+    }
+
+    .container {
+        margin-top: 30px;
+    }
+
+    h1,
+    h3 {
+        text-align: center;
+    }
+
+    hr {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+</style>
+<div class="container-lg d-flex justify-content-center ">
+    <div class="card w-75 p-4 m-3">
+        <h1>Thông tin đặt hàng</h1>
+        <div class="row">
+            <div class="col d-flex gap-3 align-items-center ">
+                <h5 class="info-title">Họ và tên:</h5>
+                <p class="m-0 p-0">{{customer.name}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex gap-3 align-items-center ">
+                <h5 class="info-title">Email :</h5>
+                <p class="m-0 p-0">{{customer.email}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex gap-3 align-items-center ">
+                <h5 class="info-title">Số điện thoại:</h5>
+                <p class="m-0 p-0">{{customer.phone}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex gap-3 align-items-center ">
+                <h5 class="info-title">Địa chỉ:</h5>
+                <p class="m-0 p-0">{{customer.address}}</p>
+            </div>
+        </div>
+        <hr>
+        <h3>Thông tin sản phẩm</h3>
+        <div class="row">
+            <div class="col d-flex gap-3 align-items-center ">
+                <h5 class="info-title">Số lượng :</h5>
+                <p class="m-0 p-0">{{total_quality}}</p>
+            </div>
+            <div class="col d-flex gap-3 align-items-center ">
+                <h5 class="info-title">Tổng :</h5>
+                <p class="m-0 p-0">{{total_price}} vnd</p>
+            </div>
+        </div>
+        <hr>
+        <h3>Phương thức thanh toán</h3>
+        <div class="row">
+            <div class="col d-flex">
+                <h5 class="info-title">Phương thức:</h5>
+                <select class="form-control">
+                    <option>Thanh toán khi giao hàng</option>
+                    <option>Chuyển khoản ngân hàng</option>
+                    <option>Thanh toán trực tuyến</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <div class=" ">
+            <button class="btn btn-success w-100"  onclick="placeOrder()"><a class="text-light text-decoration-none" href="{% url 'clear_cart' %}">Đặt hàng</a> </button>
+        </div>
+    </div>
+</div>
+<script>
+    function placeOrder() {
+        // Gửi yêu cầu đặt hàng đến máy chủ (có thể sử dụng Ajax để gửi yêu cầu POST)
+
+        // Hiển thị thông báo thành công
+        alert("Đặt hàng thành công!");
+
+        // Chuyển hướng người dùng đến trang khác
+        window.location.href = "{% url 'clear_cart' %}";  // Thay 'clear_cart' bằng tên đúng của URL xóa giỏ hàng
+    }
+</script>
+{% endblock %}

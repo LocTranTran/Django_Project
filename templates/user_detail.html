@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/banner.css' %}">
+{% endblock styles %}
+{% block title %}
+Cập nhật thông tin
+{% endblock %}
+{% block content %}
+<div class="banner0 mt-4  container-lg ">
+    <div class="bannerinfos  container-xxl d-flex">
+        <i class="fa-solid fa-house fa-xxl"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+        <h5>Thông tin </h5>
+    </div>
+</div>
+
+<div class="container-lg d-flex justify-content-center align-items-center p-5 ">
+    <div class="row p-0 m-0 position-relative ">
+        <div class="col-8 shadow p-4" style="position: relative; left: 50%; transform: translate(-50%,0); width: 100%">
+            <h1>Cập nhật thông tin</h1>
+            <hr>
+            <form method="POST" action="{% url 'create_customer' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên đăng nhập: <b>{{ customer.user.username }}</b></label>
+                    <!-- <input type="text" class="form-control" id="username" name="username"
+                        value="{{ customer.user.username }}" placeholder="Nhập tên đăng nhập"> -->
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Tên tài khoản:</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ customer.name }}"
+                        placeholder="Nhập tên đăng nhập">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Số điện thoại:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" value="{{ customer.phone }}"
+                        placeholder="Nhập số điện thoại">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Địa chỉ email:</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ customer.email }}"
+                        placeholder="Nhập địa chỉ email">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Địa chỉ:</label>
+                    <input type="text" class="form-control" id="address" name="address" value="{{ customer.address }}"
+                        placeholder="Nhập địa chỉ">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Lưu</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

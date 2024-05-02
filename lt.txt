@@ -1,0 +1,69 @@
+Create project Django:
+    django-admin startproject .
+    py manage.py runserver
+    py manage.py migrate
+
+Create app Django:
+    django-admin startapp .
+home/+pages/+templates:
+    + home.html
+
+home/view.py:
+def index (request) :
+    return render(, "page/home.html")
+
+home/+urls.py:
+    from django.urls import path
+    from . import views
+    urlpatterns = [
+        path('', views.index, name='home'),
+    ]
+
+Web/settings.py :
+        INSTALLED-APP -> + "nameapp"
+        'DIRS': ['home/template']
+
+        import os
+        BASE_DIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static"),
+]
+
+
+Web/urls.py :
+    path('', include('home.urls')),
+    
+home/+static:
+
+Create Table (Model):
+home/models.py:
+class Info(models.Model):
+    fname = models.CharField(max_length=255)
+    lname = models.CharField(max_length=255)
+
+python manage.py createsuperuser
+py manage.py makemigrations
+py manage.py migrate
+py manage.py shell
+    from home.models import Info
+    info = Info(fname='Emil', lname='Refsnes')
+    info.save()
+    Info.objects.all()
+    Info.objects.all().values()
+
+Up file audio and image :
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+App/urls.py:
+    from django.conf import settings
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+Create Post :
+home/view.py:
+def list(request):
+    Data = {'Posts': Post.objects.all().order_by('-date')}  # Get all posts and
+    return render(request, 'blog/blog.html', Data)

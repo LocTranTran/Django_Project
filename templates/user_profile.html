@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/banner.css' %}">
+{% endblock styles %}
+
+{% block title %}
+Cập nhật thông tin
+{% endblock %}
+
+{% block content %}
+<div class="banner0 mt-4  container-lg ">
+    <div class="bannerinfos  container-xxl d-flex">
+        <i class="fa-solid fa-house fa-xxl"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+        <h5>Thông tin </h5>
+    </div>
+</div>
+
+<div class="container p-3">
+    <h1 class="text-center mb-4">Thông tin khách hàng</h1>
+    <div class="customer-info w-100 d-flex justify-content-center" style="width: 1000px">
+        <ul class="list-group w-75">
+            <li class="list-group-item">
+                <strong>Tên đăng nhập:</strong> {{ customer.name }}
+            </li>
+            <li class="list-group-item">
+                <strong>Số điện thoại:</strong> {{ customer.phone }}
+            </li>
+            <li class="list-group-item">
+                <strong>Địa chỉ email:</strong> {{ customer.email }}
+            </li>
+            <li class="list-group-item">
+                <strong>Địa chỉ:</strong> {{ customer.address }}
+            </li>
+            <div class="text-right mt-4 d-flex justify-content-end">
+                <a href="{% url 'user_detail' %}" class=""><button class="btn btn-primary">Sửa thông tin</button></a>
+            </div>
+        </ul>
+    </div>
+</div>
+{% endblock %}

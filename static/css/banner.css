@@ -1,0 +1,35 @@
+.banner0 {
+  background-image: url("../image/banner.jpg");
+  height: 100px;
+  background-size: cover;
+  margin: 10px 0;
+  background-color: #56dbed; /* Màu nền bạn muốn áp dụng */
+  background-blend-mode: multiply; /* Áp dụng chế độ blend mode */
+}
+
+.banner0 .bannerinfos {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 20px;
+  color: #3f3f3f;
+  font-size: 1.6rem;
+  gap: 20px;
+}
+
+.banner0 .bannerinfos i {
+  font-size: 1rem;
+}
+/* ____________________ */
+
+.banner1 {
+  background-image: url("../image/Banner-1.png");
+  height: 600px;
+  background-size: cover;
+  margin: 10px 0;
+}
+/* -------------------- */
+*{
+  z-index: 1;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/banner.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<div class="banner0   container-xl mt-4 ">
+    <div class="bannerinfos  container-xxl d-flex">
+        <i class="fa-solid fa-house fa-xxl"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+        <h5>Trang chủ</h5>
+    </div>
+</div>
+<div class="banner1 container-lg">
+</div>
+<br>
+<div class="container-lg d-flex flex-wrap  gap-2 justify-content-center ">
+    {% for product in products|slice:":5" %}
+    <div class="card  " style=" z-index: -9">
+        <div class="" style="height: 320px;width: 100%;">
+            <div class="card-image">
+                <img src="{{product.image.url}}" alt="Card Image">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">{{product.name}}</h3>
+            </div>
+
+        </div>
+        <div class="d-flex  justify-content-around align-content-center align-items-center py-3 ">
+            <p class=" p-0  m-0 card-description">{{product.price}}&nbsp;k</p>
+
+            <button class="btn btn-primary w-50 justify-content-center  ">
+                <a class="text-light text-decoration-none " href="{% url 'add_to_cart' product.id %}">Mua
+                    ngay</a></button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<br>
+
+
+<div class="d-flex justify-content-center ">
+    <div class="disbanded__bg ">
+        <img class="container-lg" src="../../../static/image/tim-hieu-ve-phong-cach-thoi-trang-toi-gian-2.jpg">
+    </div>
+
+</div>
+<div class="d-flex justify-content-center ">
+    <div class="disbanded d-flex container-lg  p-5" style="background-image: url('../static/image/banner.jpg'); height: 500px;
+      background-size: cover;
+      margin: 10px;background-color: #aee875; /* Màu nền bạn muốn áp dụng */
+      background-blend-mode: multiply; ">
+        <div class="p-5 disbanded__time rounded-1 d-flex flex-column  position-relative text-bg-light shadow text-center "
+            style="left: 50%; transform: translate(-50%,0%);">
+            <h3>BEST DEALS</h3>
+            <h2 class="shadow">GIẢM GIÁ TRONG THÁNG </h2>
+            <table class="shadow text-center">
+                <tr>
+                    <td>Ngày</td>
+                    <td>Giờ</td>
+                    <td>Phút</td>
+                    <td>Giây</td>
+                </tr>
+                <tr>
+                    <td id="days" class="time"></td>
+                    <td id="hours" class="time"></td>
+                    <td id="minutes" class="time"></td>
+                    <td id="seconds" class="time"></td>
+                </tr>
+            </table>
+            <button class="btn">Mua Ngay <i class="fa-solid fa-arrow-right fa-xxl"></i></button>
+        </div>
+    </div>
+</div>
+
+
+{% block scripts %}
+
+<script>
+    // Hàm chạy giờ
+    function countdown(endDate) {
+        // Tính toán thời gian còn lại
+        const timeLeft = endDate - new Date();
+
+        // Chuyển đổi thời gian còn lại thành ngày, giờ, phút và giây
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // Cập nhật giao diện người dùng với thời gian còn lại
+        document.getElementById("days").innerHTML = formatNumber(days);
+        document.getElementById("hours").innerHTML = formatNumber(hours);
+        document.getElementById("minutes").innerHTML = formatNumber(minutes);
+        document.getElementById("seconds").innerHTML = formatNumber(seconds);
+
+        // Kiểm tra nếu thời gian còn lại đã hết
+        if (timeLeft < 0) {
+            document.getElementById("countdown").innerHTML = "Hết thời gian";
+            // Thực hiện các hành động khác khi hết thời gian (ví dụ: ẩn nút mua hàng)
+        }
+    }
+
+    // Hàm định dạng số thành chuỗi có hai chữ số (vd: 01, 02, 03)
+    function formatNumber(number) {
+        return number < 10 ? `${number}` : number;
+    }
+
+    // Thiết lập thời gian kết thúc (ngày, giờ, phút, giây)
+    const endDate = new Date("2024-05-26T00:00:00Z");
+
+    // Cập nhật thời gian mỗi giây
+    setInterval(function () {
+        countdown(endDate);
+    }, 1000);
+</script>
+{% endblock scripts %}
+
+{% endblock content %}
